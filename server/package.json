@@ -1,0 +1,19 @@
+{
+  "name": "paypal-coding-assignment",
+  "version": "1.0.0",
+  "description": "this is a coding assigment for paypal",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.2",
+    "nodemon": "^2.0.22"
+  }
+}

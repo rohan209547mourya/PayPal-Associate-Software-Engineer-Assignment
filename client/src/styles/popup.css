@@ -1,0 +1,55 @@
+.popup-form-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(42, 40, 40, 0.397);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-form-container form {
+    display: flex;
+    flex-direction: column;
+    background-color: #444654;
+    box-shadow: 7px 8px 19px 17px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+
+.btnClose {
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.popup-form-container form label {
+    margin-bottom: 10px;
+}
+
+.popup-form-container form input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+}
+
+.popup-form-container form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-form-container button {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}

@@ -12,7 +12,10 @@ router.post("/", authorization, async(req, res) => {
     const isValidData = validateTeam(req.body)
 
     if (isValidData.error) {
-        return res.status(400).send(isValidData.error.details[0].message)
+        return res.status(400).json({
+            code: 400,
+            message: isValidData.error.details[0].message
+        })
     }
 
     const team = new Team({
@@ -21,9 +24,20 @@ router.post("/", authorization, async(req, res) => {
         createdBy: req.user._id
     })
 
+    const user = await User.findById(req.user._id)
+
     await team.save()
 
-    res.status(201).send(team)
+    user.teams.push(team)
+
+    await user.save()
+
+
+    res.status(201).send( {
+        code: 201,
+        message: "Team created successfully",
+        team: team
+    })
 })
 
 
@@ -34,16 +48,16 @@ router.post("/:id/member", authorization, async(req, res) => {
     const team = await Team.findById(req.params.id)
 
     if (!team) {
-        return res.status(404).json({message: "Team not found"})
+        return res.status(404).json({code: 404, message: "Team not found"})
     }
 
     if (team.createdBy.toString() !== req.user._id.toString()) {
-        return res.status(403).json({message: "You are not allowed to add member to this team" })
+        return res.status(403).json({code: 403, message: "You are not allowed to add member to this team" })
     }
 
     const member = await User.findOne({email: req.body.email})
     if (!member) {
-        return res.status(404).json({message: "User not found"})
+        return res.status(404).json({code:404, message: "User not found"})
     }
 
     let isAlreadyMemberAdded = false;
@@ -57,7 +71,7 @@ router.post("/:id/member", authorization, async(req, res) => {
     member.teams.push(team)
 
     if (isAlreadyMemberAdded) {
-        return res.status(400).json({message: "This member is already added to this team"})
+        return res.status(400).json({code:400 , message: "This member is already added to this team"})
     }
     
    
@@ -66,6 +80,8 @@ router.post("/:id/member", authorization, async(req, res) => {
 
     await team.save()
     await member.save()
+
+    team.code = 201
 
     res.status(201).send(team)
 })
@@ -76,18 +92,32 @@ router.get("/:id", authorization, async(req, res) => {
 
     const team = await Team.findById(req.params.id)
 
+
     if (!team) {
         return res.status(404).json({message: "Team not found"})
     }
     res.send(team)
 })
 
-// get all teams
-router.get("/", authorization, async(req, res) => {
+// get all sprints by team id
 
-    const teams = await Team.find({createdBy: req.user._id})
+router.get("/:id/sprints", authorization, async(req, res) => {
 
-    res.send(teams)
+    const sprints = await Team.findById(req.params.id)
+                .select('sprints')
+                .populate('sprints', 'title description startDate')
+
+    if (!sprints) {
+        return res.status(404).json({message: "Team not found"})
+
+    }
+
+    res.status(200).send({
+        code: 200,
+        message: "Sprints fetched successfully",
+        sprints: sprints.sprints
+    })
 })
+
 
 module.exports = router

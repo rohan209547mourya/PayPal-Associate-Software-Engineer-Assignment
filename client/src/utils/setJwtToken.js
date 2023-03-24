@@ -7,7 +7,9 @@ const setJwtToken = (token) => {
     }
 }
 
-const getjwtToken = Cookies.get('user-session-token');
+const getjwtToken = () => {
+    return Cookies.get('user-session-token');
+}
 
 
 export {setJwtToken, getjwtToken}

@@ -1,0 +1,41 @@
+.team-container {
+    width: 63%;
+    margin: auto;
+    padding: 20px;
+}
+
+.teamTitle {
+    margin-left: 5px;
+}
+
+.teams {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-gap: 10px; */
+}
+
+
+.team-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgba(15, 16, 19, 0.805);
+}
+
+.add-team {
+
+    border: none;
+    width: 100%;
+    padding: 10px;
+    background-color: #4c8dd6;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}

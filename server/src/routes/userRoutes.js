@@ -54,5 +54,22 @@ router.get('/profile', authorization, async (req, res) => {
 
 
 
+
+
+// get all teams
+router.get('/teams', authorization , async (req, res) => {
+
+    const teams = await User.findOne({_id: req.user._id})
+            .select(['teams'])
+            .populate('teams', ['name', 'description', 'members', 'createAt'])
+            .sort({createAt: -1})
+
+    res.status(200).json({
+        teams: teams.teams,
+        code: 200
+    })
+})
+
+
 module.exports = router
 

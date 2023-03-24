@@ -1,21 +1,16 @@
 import React, { createContext, useState } from "react";
+import { fetchCurrentUserData } from '../utils/api'
 
 
 export const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
 
-
-    const [currentUserData, setCurrentUserData] = useState({
-        id: null,
-        name: null,
-        email: null,
-    })
+    // const []
 
     return (
-
-        <GlobalContext.Provider value={{}}>
+        <GlobalContext.Provider value={{ count, increment }}>
             {children}
         </GlobalContext.Provider>
     )
-};
+}

@@ -1,12 +1,15 @@
-export const fetchFromTaskPlannerApi = async (path, method = 'GET', data = null) => {
+import { getjwtToken } from "./setJwtToken";
+
+
+export const fetchFromTaskPlannerApi = async (path, method = 'GET', data = null, headers = {
+    'Content-Type': 'application/json'
+  }) => {
 
     const URL = 'http://localhost:5000/api/';
   
     const options = {
       method,
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: headers
     };
   
     if (data) {
@@ -28,3 +31,12 @@ export const fetchFromTaskPlannerApi = async (path, method = 'GET', data = null)
     }
   };
   
+
+export const fetchCurrentUserData = () => {
+
+    return fetchFromTaskPlannerApi('users/profile', 'GET', null, {
+
+        'Content-Type': 'application/json',
+        'x-auth-token' : getjwtToken()
+    });
+}; 

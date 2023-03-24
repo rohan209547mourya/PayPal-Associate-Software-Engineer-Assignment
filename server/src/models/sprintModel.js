@@ -4,7 +4,6 @@ const Joi = require('joi')
 const sprintSchema = new mongoose.Schema({
     title: { 
         type: String, 
-        unique: true,
         required: true 
     },
     startDate: { 

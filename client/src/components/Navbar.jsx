@@ -13,12 +13,6 @@ const Navbar = () => {
             text: 'home'
         },
         {
-            id: 2,
-            url: '/sprints',
-            text: 'Sprints'
-        },
-        {
-
             id: 3,
             url: '/signup',
             text: 'Signup'

@@ -11,18 +11,19 @@ const { Team } = require('../models/teamModel')
 router.post("/:teamid", authorization ,async(req, res) => {
 
     const { error } = validate(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
+    if (error) return res.status(400).send({
+        code: 400,
+        message: error.details[0].message
+    })
 
-    console.log(req.params.teamid);
     const team = await Team.findById(req.params.teamid)
-    if (!team) return res.status(404).json({message : "Team not found"})
+    if (!team) return res.status(404).json({code: 404,message : "Team not found"})
 
 
-    let sprint = await Sprint.findOne({title: req.body.title})
-
-    console.log(sprint);
-
-    if (sprint) return res.status(400).json({message: "Sprint already exists" }) 
+    team.sprints.forEach(sprint => {
+        if (sprint.title === req.body.title) return res.status(400).json({code: 400,message: "Sprint already exists" })
+    })
+    // if (sprint) return res.status(400).json({code: 400,message: "Sprint already exists" }) 
 
     sprint = new Sprint({
         title: req.body.title,
@@ -33,7 +34,11 @@ router.post("/:teamid", authorization ,async(req, res) => {
     team.sprints.push(sprint)
     await team.save()
 
-    res.status(201).send(sprint)
+    res.status(201).send({
+        code: 201,
+        message: "Sprint created successfully",
+        sprint: sprint
+    })
 })
 
 module.exports = router;

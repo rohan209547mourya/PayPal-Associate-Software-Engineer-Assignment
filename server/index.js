@@ -1,12 +1,14 @@
 require('dotenv').config()
 require('express-async-errors')
 const connectDB = require('./config/connectDB')
-const express = require('express')
-const app = express()
 const errorHandler = require('./middleware/errorHandler')
+const express = require('express')
+const cors = require('cors')
+const app = express()
 
+
+app.use(cors())
 require('./middleware/routes')(app)
-require('./middleware/cors')(app)
 
 
 app.listen(5000, () => {

@@ -9,11 +9,11 @@ a {
 
 }
 
-.logo>img {
+#logo {
 
     width: 100%;
+    padding-top: 10px;
 }
-
 
 ul {
 

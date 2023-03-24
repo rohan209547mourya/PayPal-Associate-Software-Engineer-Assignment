@@ -1,0 +1,120 @@
+form {
+    text-align: center;
+    padding: 100px;
+}
+
+.login {
+    width: 40%;
+    margin: auto;
+}
+
+.newAccount>p {
+
+    font-size: 12px;
+}
+
+
+.create-one {
+    color: rgb(84, 201, 255);
+}
+
+.custom-field {
+    position: relative;
+    font-size: 20px;
+    border-top: 20px solid transparent;
+    margin-bottom: 5px;
+    display: inline-block;
+    --field-padding: 12px;
+}
+
+.custom-field input {
+    border: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: #000000;
+    padding: var(--field-padding);
+    border-radius: 3px;
+    width: 250px;
+    outline: none;
+    font-size: 14px;
+}
+
+.custom-field .placeholder {
+    position: absolute;
+    left: var(--field-padding);
+    width: calc(100% - (var(--field-padding) * 2));
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: 22px;
+    line-height: 100%;
+    transform: translateY(-50%);
+    color: #aaa;
+    transition:
+        top 0.3s ease,
+        color 0.3s ease,
+        font-size 0.3s ease;
+}
+
+.custom-field input.dirty+.placeholder,
+.custom-field input:focus+.placeholder,
+.custom-field input:not(:placeholder-shown)+.placeholder {
+    top: -10px;
+    font-size: 10px;
+    color: #222;
+}
+
+
+.custom-field.input input {
+    background: none;
+    border: 2px solid #ddd;
+    color: white;
+    font-size: 1.2rem;
+    transition: border-color 0.3s ease;
+}
+
+.custom-field.input input+.placeholder {
+    left: 8px;
+    padding: 0 5px;
+}
+
+.custom-field.input input.dirty,
+.custom-field.input input:not(:placeholder-shown),
+.custom-field.input input:focus {
+    border-color: rgb(114, 186, 234);
+    transition-delay: 0.1s
+}
+
+.custom-field.input input.dirty+.placeholder,
+.custom-field.input input:not(:placeholder-shown)+.placeholder,
+.custom-field.input input:focus+.placeholder {
+    top: 0;
+    font-size: 10px;
+    color: rgb(114, 186, 234);
+    background: #444654;
+    width: auto;
+}
+
+button {
+
+    background: rgb(114, 186, 234);
+    color: white;
+    border: none;
+    width: 78%;
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+
+button:hover {
+
+
+    background: rgb(15, 138, 220);
+
+}

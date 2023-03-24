@@ -22,7 +22,9 @@ const Navbar = () => {
     return (
         <nav className='navbar'>
             <div className='logo'>
-                <img src={logo} />
+                <Link to={'/home'}>
+                    <img id='logo' src={logo} />
+                </Link>
             </div>
 
             <div>
@@ -31,7 +33,7 @@ const Navbar = () => {
                     {
                         links.map(link => {
                             return (
-                                <li>
+                                <li key={link.id}>
                                     <Link key={link.id} to={link.url}>{link.text}</Link>
                                 </li>
                             )

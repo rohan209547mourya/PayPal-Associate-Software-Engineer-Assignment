@@ -1,16 +1,11 @@
-import React, { useState } from 'react'
-import { fetchFromTaskPlannerApi } from '../utils/api'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../styles/login.css'
-import { Link } from 'react-router-dom'
+import React from 'react'
 
-const Login = () => {
+const Signup = () => {
 
-
-    const [loginObject, setLoginObject] = useState({
+    const [signupObject, setSignupObject] = useState({
         email: '',
-        password: ''
+        password: '',
+        name: ''
     })
 
     const handleSubmitRequest = (e) => {
@@ -65,22 +60,40 @@ const Login = () => {
                 });
             });
     };
-
-
-
     return (
-        <div className='login'>
+        <div>
+
             <form onSubmit={handleSubmitRequest}>
+
+                <div>
+                    <label className="custom-field input">
+                        <input
+                            type="name"
+                            name="name"
+                            autoComplete='off'
+                            value={signupObject.name}
+                            onChange={(e) => {
+
+                                setSignupObject({
+                                    ...loginObject,
+                                    name: e.target.value
+                                })
+
+                            }}
+                        />
+                        <span className="placeholder">Enter Email</span>
+                    </label>
+                </div>
                 <div>
                     <label className="custom-field input">
                         <input
                             type="email"
                             name="email"
                             autoComplete='off'
-                            value={loginObject.email}
+                            value={signupObject.email}
                             onChange={(e) => {
 
-                                setLoginObject({
+                                setSignupObject({
                                     ...loginObject,
                                     email: e.target.value
                                 })
@@ -97,10 +110,10 @@ const Login = () => {
                             type="password"
                             name="password"
                             autoComplete='off'
-                            value={loginObject.password}
+                            value={signupObject.password}
                             onChange={(e) => {
 
-                                setLoginObject({
+                                setSignupObject({
                                     ...loginObject,
                                     password: e.target.value
                                 })
@@ -115,8 +128,9 @@ const Login = () => {
                     <p>Don't have an account? <Link to={"/signup"} className='create-one'>Create One</Link></p>
                 </div>
             </form>
+
         </div>
     )
 }
 
-export default Login
+export default Signup

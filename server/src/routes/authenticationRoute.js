@@ -11,9 +11,12 @@ router.post('/login', async (req, res) => {
     const isValidData = validate(req.body)
 
     if (isValidData.error) {
-        return res.status(400).send(isValidData.error.details[0].message)
+        return res.status(400).json({
+            message: isValidData.error.details[0].message,
+            code: 400,
+            status: "Bad Request"
+        })
     }
-
 
     const user = await User.findOne({email: req.body.email})
 
@@ -23,11 +26,9 @@ router.post('/login', async (req, res) => {
         status: "Bad Request"
     }
     
-
     if(!user) return res.status(400).json(errorMessage)
 
     const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
-
     if(!isPasswordValid) return res.status(400).json(errorMessage)
 
     const token = user.generateAuthToken()

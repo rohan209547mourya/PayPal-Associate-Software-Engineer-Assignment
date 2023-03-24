@@ -67,6 +67,15 @@ span {
     height: 30px;
 }
 
+
+.btns>a {
+
+    font-size: 13px;
+    align-self: center;
+    padding: 5px;
+}
+
+
 .add-task {
 
     border: none;

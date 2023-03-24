@@ -4,7 +4,7 @@ import logo from '../assets/logo.png'
 import '../styles/navbar.css'
 
 
-const Navbar = () => {
+const Navbar = ({ isUserLoggedIn }) => {
 
     const links = [
         {
@@ -12,12 +12,24 @@ const Navbar = () => {
             url: '/home',
             text: 'home'
         },
-        {
+    ]
+
+
+    if (!isUserLoggedIn) {
+        links.push({
             id: 3,
             url: '/signup',
             text: 'Signup'
-        }
-    ]
+        })
+    }
+    else {
+
+        links.push({
+            id: 2,
+            url: '/logout',
+            text: 'logout'
+        })
+    }
 
     return (
         <nav className='navbar'>

@@ -14,13 +14,13 @@ router.post("/:sprintid", authorization, async(req, res) => {
     const isValidData = validateTask(req.body)
 
     if (isValidData.error) {
-        return res.status(400).json({message: isValidData.error.details[0].message})
+        return res.status(400).json({code: 400,message: isValidData.error.details[0].message})
     }
 
     const sprint = await Sprint.findById(req.params.sprintid)
 
     if (!sprint) {
-        return res.status(404).json({message: "Sprint not found"})
+        return res.status(404).json({code:404,message: "Sprint not found"})
     }
 
     const task = new Task({
@@ -34,15 +34,21 @@ router.post("/:sprintid", authorization, async(req, res) => {
     sprint.tasks.push(task)
     await sprint.save()
 
-    res.status(201).send(task)
+    res.status(201).send({
+        code: 201,
+        message: "Task created successfully",
+        task: task
+    })
 })
 
 
 // assign task to a user
-router.post("/", authorization, async(req, res) => {
+router.put("/assignee", authorization, async(req, res) => {
 
 
-    const {sprintId, taskId, userId, teamId} = req.body
+    const {sprintId, taskId, email, teamId} = req.body
+
+    console.log(teamId);
 
     const sprint = await Sprint.findById(sprintId)
     if (!sprint) {
@@ -63,9 +69,9 @@ router.post("/", authorization, async(req, res) => {
     }
 
 
-    const user = await User.findById(userId)
+    const user = await User.findOne({email: email})
     if (!user) {
-        return res.status(404).json({message: "Team not found"})
+        return res.status(404).json({message: "User not found! Invalid Email id"})
     }
 
     let isSprintInTeam = false;

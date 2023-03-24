@@ -3,7 +3,7 @@ const router = express.Router();
 const { Sprint, validate } = require('../models/sprintModel')
 const authorization = require('../../middleware/authorization')
 const { Team } = require('../models/teamModel')
-
+const { User } = require('../models/userModel')
 
 
 
@@ -40,5 +40,29 @@ router.post("/:teamid", authorization ,async(req, res) => {
         sprint: sprint
     })
 })
+
+
+// get all task from a sprint
+router.get("/:sprintid", authorization, async(req, res) => {
+
+    const tasks = await Sprint.findById(req.params.sprintid)
+        .select('tasks')
+        .populate('tasks')
+
+
+    const user = await User.findById(tasks.assignee);
+
+    if (!tasks) return res.status(404).json({code: 404,message : "Sprint not found"})
+
+    res.status(200).send({
+        code: 200,
+        message: "Sprint found",
+        sprint: tasks,
+        assignee: user
+    })
+})
+
+
+
 
 module.exports = router;

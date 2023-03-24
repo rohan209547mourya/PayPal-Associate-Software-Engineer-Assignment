@@ -38,7 +38,7 @@ function CreateNewSprint({ handleClose, teamId }) {
                     });
                 }
 
-                if (err.code == 400) {
+                if (res.code == 400) {
                     toast.warning(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -51,7 +51,7 @@ function CreateNewSprint({ handleClose, teamId }) {
 
                 }
 
-                if (err.code == 403) {
+                if (res.code == 403) {
                     toast.info(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -63,7 +63,7 @@ function CreateNewSprint({ handleClose, teamId }) {
                     });
                 }
 
-                if (err.code == 404) {
+                if (res.code == 404) {
                     toast.error(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -121,7 +121,7 @@ function CreateNewSprint({ handleClose, teamId }) {
 
 
         handleClose();
-        window.location.reload();
+        // window.location.reload();
     };
 
     return (

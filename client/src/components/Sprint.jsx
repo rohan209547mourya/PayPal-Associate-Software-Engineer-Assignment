@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import CreateNewSprint from './CreateNewSprint'
 import { fetchFromTaskPlannerApi } from '../utils/api'
 import { getjwtToken } from '../utils/setJwtToken'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { uniqueId } from 'lodash'
+import AddTaskPopUp from './AddTaskPopUp'
 
 const Sprint = () => {
 
@@ -19,7 +20,19 @@ const Sprint = () => {
         setShowPopup(false);
     };
 
+    const [showPopupTask, setShowPopupTask] = useState(false);
+
+    const handleAddTask = () => {
+        setShowPopupTask(true);
+    };
+
+    const handleClosePopupTask = () => {
+        setShowPopupTask(false);
+    };
+
     const [sprints, setSprints] = useState([])
+
+
 
 
     useEffect(() => {
@@ -77,8 +90,9 @@ const Sprint = () => {
                                                 </span>
                                             </div>
                                             <div className='btns'>
-                                                <button className='add-task'>Add Task</button>
-                                                <button className='view-task'>View Tasks</button>
+                                                <button className='add-task' onClick={handleAddTask}>Add Task</button>
+                                                {showPopupTask && <AddTaskPopUp handleClose={handleClosePopupTask} sprintId={sprint._id} />}
+                                                <Link to={`/tasks/${teamId}/${sprint._id}`} className='view-task'>View Tasks</Link>
                                             </div>
                                         </div>
                                     </div>

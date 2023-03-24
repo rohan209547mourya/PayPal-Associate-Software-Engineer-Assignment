@@ -4,31 +4,27 @@ import '../styles/popup.css'
 import { getjwtToken } from "../utils/setJwtToken";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from "react-router-dom";
 
-function CreateNewTeamPopup({ handleClose, setTeams, teams }) {
+function AddMemberPopup({ teamId, handleClose }) {
 
 
-    const [requestObject, setRequestObject] = useState({
-        name: '',
-        description: ''
-    });
+    const [email, setEmail] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const obj = {
-            name: requestObject.name,
-            description: requestObject.description
+            email: email
         }
 
-        fetchFromTaskPlannerApi(`teams`, "POST", obj, {
+        fetchFromTaskPlannerApi(`teams/${teamId}/member`, "POST", obj, {
             "Content-Type": "application/json",
             "x-auth-token": getjwtToken()
         })
             .then((res) => {
-                if (res.code == 201) {
-                    toast.success(res.message, {
+
+                if (res) {
+                    toast.success("User has been added to the team.", {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -38,10 +34,7 @@ function CreateNewTeamPopup({ handleClose, setTeams, teams }) {
                         progress: undefined,
                     });
 
-                    setTeams([...teams, res.team]);
                 }
-
-
             }
             )
             .catch((err) => {
@@ -85,9 +78,7 @@ function CreateNewTeamPopup({ handleClose, setTeams, teams }) {
             }
             );
 
-
-
-        handleClose();
+        handleClose()
     };
 
 
@@ -95,34 +86,15 @@ function CreateNewTeamPopup({ handleClose, setTeams, teams }) {
     return (
         <div className="popup-form-container">
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Team Name:</label>
+                <label htmlFor="email">Email:</label>
                 <input
-                    type="text"
-                    id="name"
-                    value={requestObject.name}
-                    onChange={(e) =>
-                        setRequestObject({
-                            ...requestObject,
-                            name: e.target.value
-                        })
-                    }
-                />
-                <br />
-                <label htmlFor="description">Description:</label>
-                <input
-                    type="text"
-                    id="description"
-                    value={requestObject.description}
-                    onChange={(e) =>
-
-                        setRequestObject({
-                            ...requestObject,
-                            description: e.target.value
-                        })
-                    }
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
                 <div className="btnClose">
-                    <button type="submit">Create Team</button>
+                    <button type="submit">Add Member</button>
                     <button onClick={handleClose}>Close</button>
                 </div>
             </form>
@@ -130,4 +102,4 @@ function CreateNewTeamPopup({ handleClose, setTeams, teams }) {
     );
 }
 
-export default CreateNewTeamPopup;
+export default AddMemberPopup;

@@ -17,11 +17,12 @@ function AddTaskPopUp({ handleClose, sprintId }) {
         event.preventDefault();
 
         const obj = {
-            title: requestObject.name,
-            description: requestObject.description
+            title: requestObject.title,
+            description: requestObject.description,
+            type: requestObject.type
         }
 
-        fetchFromTaskPlannerApi(`sprints/${teamId}`, "POST", obj, {
+        fetchFromTaskPlannerApi(`tasks/${sprintId}`, "POST", obj, {
             "Content-Type": "application/json",
             "x-auth-token": getjwtToken()
         })
@@ -39,7 +40,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                     });
                 }
 
-                if (err.code == 400) {
+                if (res.code == 400) {
                     toast.warning(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -52,7 +53,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
 
                 }
 
-                if (err.code == 403) {
+                if (res.code == 403) {
                     toast.info(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -64,7 +65,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                     });
                 }
 
-                if (err.code == 404) {
+                if (res.code == 404) {
                     toast.error(err.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -80,6 +81,9 @@ function AddTaskPopUp({ handleClose, sprintId }) {
             }
             )
             .catch((err) => {
+
+                console.log(err);
+
                 if (err.code == 400) {
                     toast.warning(err.message, {
                         position: "top-right",
@@ -122,21 +126,20 @@ function AddTaskPopUp({ handleClose, sprintId }) {
 
 
         handleClose();
-        window.location.reload();
     };
 
     return (
         <div className="popup-form-container">
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Task Name:</label>
+                <label htmlFor="name">Task title:</label>
                 <input
                     type="text"
                     id="name"
-                    value={requestObject.name}
+                    value={requestObject.title}
                     onChange={(e) =>
                         setRequestObject({
                             ...requestObject,
-                            name: e.target.value
+                            title: e.target.value
                         })
                     }
                 />
@@ -158,15 +161,20 @@ function AddTaskPopUp({ handleClose, sprintId }) {
 
                 <br />
                 <label htmlFor="type">Type:</label>
-                <select>
+                <select onChange={(e) => {
+                    setRequestObject({
+                        ...requestObject,
+                        type: e.target.value
+                    })
+                }}>
                     <option value="story">Story</option>
                     <option value="bug">Bug</option>
-                    <option value="feature">Task</option>
+                    <option value="feature">Feature</option>
                 </select>
 
 
                 <div className="btnClose">
-                    <button type="submit">Create Sprint</button>
+                    <button type="submit">Create Task</button>
                     <button onClick={handleClose}>Close</button>
                 </div>
             </form>

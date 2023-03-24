@@ -19,14 +19,9 @@ const taskSchema = new mongoose.Schema({
         enum: ['todo', 'inprogress', 'completed'], 
         default: 'todo' 
     },
-    assignee: [{ 
+    assignee: { 
         type: mongoose.Schema.Types.ObjectId ,
         ref: 'User',
-    }],
-    sprint: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Sprint', 
-        required: true 
     }
 });
   
@@ -38,7 +33,6 @@ function validateTask(task) {
         description: Joi.string(),
         status: Joi.string(),
         assignee: Joi.string(),
-        sprint: Joi.string().required()
     })
     return schema.validate(task)
 }

@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Finger+Paint&family=Poppins&display=swap');
+
+
+body {
+
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins';
+  background: #444654;
+  box-sizing: border-box;
+  color: white;
+}

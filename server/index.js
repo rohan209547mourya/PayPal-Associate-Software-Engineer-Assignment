@@ -6,6 +6,7 @@ const app = express()
 const errorHandler = require('./middleware/errorHandler')
 
 require('./middleware/routes')(app)
+require('./middleware/cors')(app)
 
 
 app.listen(5000, () => {

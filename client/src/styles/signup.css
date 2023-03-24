@@ -3,19 +3,18 @@ form {
     padding: 100px;
 }
 
-.login {
+.signup {
     width: 40%;
     margin: auto;
 }
 
-.newAccount>p {
+.alreadyAccount>p {
 
     font-size: 12px;
-    color: white;
 }
 
 
-.create-one {
+.login {
     color: rgb(84, 201, 255);
 }
 
@@ -98,7 +97,7 @@ form {
     width: auto;
 }
 
-.loginBtn {
+.signupBtn {
 
     background: rgb(114, 186, 234);
     color: white;

@@ -35,7 +35,7 @@ router.post('/register' , async (req, res) => {
     await user.save()
 
     const response = _.pick(user, ['name', 'email'])
-
+    response.code = 201
     response.message = "User Registed Successfully"
 
     res.status(201).send(response)

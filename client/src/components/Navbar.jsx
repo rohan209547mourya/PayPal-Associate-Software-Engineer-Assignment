@@ -17,6 +17,12 @@ const Navbar = () => {
             url: '/sprints',
             text: 'Sprints'
         },
+        {
+
+            id: 3,
+            url: '/signup',
+            text: 'Signup'
+        }
     ]
 
     return (

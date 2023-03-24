@@ -6,6 +6,7 @@ import Navbar from './components/Navbar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './components/Signup'
+import Home from './components/Home'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/home' element={<Home />} />
         </Routes>
 
       </div>

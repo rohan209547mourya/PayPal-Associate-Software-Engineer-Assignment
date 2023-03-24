@@ -4,9 +4,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/login.css'
 import { Link } from 'react-router-dom'
+import { setJwtToken, getjwtToken } from '../utils/setJwtToken';
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
 
+
+    const navigate = useNavigate();
 
     const [loginObject, setLoginObject] = useState({
         email: '',
@@ -35,6 +40,8 @@ const Login = () => {
 
                 if (res.code == 200) {
 
+                    setJwtToken(res.token)
+
                     toast.success(res.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -45,15 +52,12 @@ const Login = () => {
                         progress: undefined,
                     });
 
+                    navigate('/home')
+
                 }
-
-
-                console.log(res);
 
             })
             .catch((err) => {
-                console.log(err);
-
                 toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -110,7 +114,7 @@ const Login = () => {
                         <span className="placeholder">Enter Password</span>
                     </label>
                 </div>
-                <button type="submit">LOGIN</button>
+                <button className='loginBtn' type="submit">LOGIN</button>
                 <div className="newAccount">
                     <p>Don't have an account? <Link to={"/signup"} className='create-one'>Create One</Link></p>
                 </div>

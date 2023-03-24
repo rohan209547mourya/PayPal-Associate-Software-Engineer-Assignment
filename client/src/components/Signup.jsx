@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import '../styles/signup.css'
+import { fetchFromTaskPlannerApi } from '../utils/api'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const Signup = () => {
+
+    const navigate = useNavigate();
 
     const [signupObject, setSignupObject] = useState({
         email: '',
@@ -11,12 +20,12 @@ const Signup = () => {
     const handleSubmitRequest = (e) => {
         e.preventDefault();
 
-        console.log(loginObject);
+        console.log(signupObject);
 
-        fetchFromTaskPlannerApi('auth/login', 'POST', loginObject)
+        fetchFromTaskPlannerApi('users/register', 'POST', signupObject)
             .then((res) => {
 
-                if (res.code !== 200) {
+                if (res.code !== 201) {
                     toast.error(res.message, {
                         position: "top-right",
                         autoClose: 5000,
@@ -28,7 +37,7 @@ const Signup = () => {
                     });
                 }
 
-                if (res.code == 200) {
+                if (res.code == 201) {
 
                     toast.success(res.message, {
                         position: "top-right",
@@ -40,14 +49,10 @@ const Signup = () => {
                         progress: undefined,
                     });
 
+                    navigate('/')
                 }
-
-
-                console.log(res);
-
             })
             .catch((err) => {
-                console.log(err);
 
                 toast.error(err.message, {
                     position: "top-right",
@@ -61,7 +66,7 @@ const Signup = () => {
             });
     };
     return (
-        <div>
+        <div className='signup'>
 
             <form onSubmit={handleSubmitRequest}>
 
@@ -75,13 +80,13 @@ const Signup = () => {
                             onChange={(e) => {
 
                                 setSignupObject({
-                                    ...loginObject,
+                                    ...signupObject,
                                     name: e.target.value
                                 })
 
                             }}
                         />
-                        <span className="placeholder">Enter Email</span>
+                        <span className="placeholder">Enter Name</span>
                     </label>
                 </div>
                 <div>
@@ -94,7 +99,7 @@ const Signup = () => {
                             onChange={(e) => {
 
                                 setSignupObject({
-                                    ...loginObject,
+                                    ...signupObject,
                                     email: e.target.value
                                 })
 
@@ -114,7 +119,7 @@ const Signup = () => {
                             onChange={(e) => {
 
                                 setSignupObject({
-                                    ...loginObject,
+                                    ...signupObject,
                                     password: e.target.value
                                 })
 
@@ -123,9 +128,9 @@ const Signup = () => {
                         <span className="placeholder">Enter Password</span>
                     </label>
                 </div>
-                <button type="submit">LOGIN</button>
-                <div className="newAccount">
-                    <p>Don't have an account? <Link to={"/signup"} className='create-one'>Create One</Link></p>
+                <button className='signupBtn' type="submit">SIGNUP</button>
+                <div className="alreadyAccount">
+                    <p>Already have an account? <Link to={"/"} className='login'>Login</Link></p>
                 </div>
             </form>
 

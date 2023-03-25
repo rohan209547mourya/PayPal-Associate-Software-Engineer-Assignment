@@ -5,7 +5,10 @@
 }
 
 .teamTitle {
+    width: 40%;
+    margin: auto;
     margin-left: 5px;
+
 }
 
 .teams {

@@ -4,8 +4,7 @@ import CreateNewSprint from './CreateNewSprint'
 import { fetchFromTaskPlannerApi } from '../utils/api'
 import { getjwtToken } from '../utils/setJwtToken'
 import { Link, useParams } from 'react-router-dom'
-import { uniqueId } from 'lodash'
-import AddTaskPopUp from './AddTaskPopUp'
+import AddTaskhelper from './AddTaskhelper'
 
 const Sprint = () => {
 
@@ -20,32 +19,30 @@ const Sprint = () => {
         setShowPopup(false);
     };
 
-    const [showPopupTask, setShowPopupTask] = useState(false);
 
-    const handleAddTask = () => {
-        setShowPopupTask(true);
-    };
-
-    const handleClosePopupTask = () => {
-        setShowPopupTask(false);
-    };
 
     const [sprints, setSprints] = useState([])
 
 
+    const fetchSprints = () => {
 
-
-    useEffect(() => {
         fetchFromTaskPlannerApi(`teams/${teamId}/sprints`, "GET", null, {
 
             'Content-Type': 'application/json',
             'x-auth-token': getjwtToken()
         })
             .then(res => {
-                console.log(res);
                 setSprints(res.sprints)
             })
-            .catch(err => console.log(err))
+            .catch(err => err.message)
+    }
+
+
+
+
+
+    useEffect(() => {
+        fetchSprints();
     }, [])
 
 
@@ -57,7 +54,7 @@ const Sprint = () => {
                 </div>
                 <div>
                     <button className='add-sprint' onClick={handleAddSprint}>ADD SPRINT</button>
-                    {showPopup && <CreateNewSprint handleClose={handleClosePopup} teamId={teamId} />}
+                    {showPopup && <CreateNewSprint fetchSprints={fetchSprints} handleClose={handleClosePopup} teamId={teamId} />}
                 </div>
             </div>
 
@@ -68,34 +65,11 @@ const Sprint = () => {
                     <div className='sprints'>
                         {
                             sprints.map(sprint => {
-                                console.log(sprint);
                                 return (
-                                    <div className='sprintCard' key={uniqueId()}>
-                                        <div>
-                                            <h4 style={{ marginLeft: '20px' }}>{sprint.title}
-                                                <br />
-                                                <span style={{}}>{sprint.description}</span>
-                                            </h4>
-                                        </div>
-                                        <div>
-                                            <div>
-                                                <span>
-                                                    Open at:  {
-                                                        new Date(sprint.startDate).toLocaleDateString('en-US', {
-                                                            year: 'numeric',
-                                                            month: 'long',
-                                                            day: 'numeric'
-                                                        })
-                                                    }
-                                                </span>
-                                            </div>
-                                            <div className='btns'>
-                                                <button className='add-task' onClick={handleAddTask}>Add Task</button>
-                                                {showPopupTask && <AddTaskPopUp handleClose={handleClosePopupTask} sprintId={sprint._id} />}
-                                                <Link to={`/tasks/${teamId}/${sprint._id}`} className='view-task'>View Tasks</Link>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <AddTaskhelper
+                                        key={sprint._id}
+                                        sprint={sprint}
+                                    />
                                 )
                             })
                         }

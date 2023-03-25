@@ -26,6 +26,9 @@ router.post("/", authorization, async(req, res) => {
 
     const user = await User.findById(req.user._id)
 
+
+    team.members.push(user)
+
     await team.save()
 
     user.teams.push(team)
@@ -94,9 +97,9 @@ router.get("/:id", authorization, async(req, res) => {
 
 
     if (!team) {
-        return res.status(404).json({message: "Team not found"})
+        return res.status(404).json({code: 404,message: "Team not found"})
     }
-    res.send(team)
+    res.status(200).send(team)
 })
 
 // get all sprints by team id
@@ -108,7 +111,7 @@ router.get("/:id/sprints", authorization, async(req, res) => {
                 .populate('sprints', 'title description startDate')
 
     if (!sprints) {
-        return res.status(404).json({message: "Team not found"})
+        return res.status(404).json({message:404, message: "Team not found"})
 
     }
 

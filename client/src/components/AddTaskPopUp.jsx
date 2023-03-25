@@ -27,7 +27,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
             "x-auth-token": getjwtToken()
         })
             .then((res) => {
-                console.log(res);
+
                 if (res.code == 201) {
                     toast.success(res.message, {
                         position: "top-right",
@@ -41,7 +41,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                 }
 
                 if (res.code == 400) {
-                    toast.warning(err.message, {
+                    toast.warning(res.message, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -54,7 +54,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                 }
 
                 if (res.code == 403) {
-                    toast.info(err.message, {
+                    toast.info(res.message, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -66,7 +66,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                 }
 
                 if (res.code == 404) {
-                    toast.error(err.message, {
+                    toast.error(res.message, {
                         position: "top-right",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -81,9 +81,6 @@ function AddTaskPopUp({ handleClose, sprintId }) {
             }
             )
             .catch((err) => {
-
-                console.log(err);
-
                 if (err.code == 400) {
                     toast.warning(err.message, {
                         position: "top-right",
@@ -167,6 +164,7 @@ function AddTaskPopUp({ handleClose, sprintId }) {
                         type: e.target.value
                     })
                 }}>
+                    <option value="">Select</option>
                     <option value="story">Story</option>
                     <option value="bug">Bug</option>
                     <option value="feature">Feature</option>

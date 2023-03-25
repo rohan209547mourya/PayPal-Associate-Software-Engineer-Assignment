@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 
-function CreateNewSprint({ handleClose, teamId }) {
+function CreateNewSprint({ handleClose, teamId, fetchSprints }) {
     const [requestObject, setRequestObject] = useState({
         name: '',
         description: ''
@@ -25,7 +25,6 @@ function CreateNewSprint({ handleClose, teamId }) {
             "x-auth-token": getjwtToken()
         })
             .then((res) => {
-                console.log(res);
                 if (res.code == 201) {
                     toast.success(res.message, {
                         position: "top-right",
@@ -121,6 +120,12 @@ function CreateNewSprint({ handleClose, teamId }) {
 
 
         handleClose();
+
+        setTimeout(() => {
+
+            fetchSprints()
+        }, 3000)
+
         // window.location.reload();
     };
 

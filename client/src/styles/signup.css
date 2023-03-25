@@ -11,6 +11,7 @@ form {
 .alreadyAccount>p {
 
     font-size: 12px;
+    margin-top: 20px;
 }
 
 
@@ -102,7 +103,7 @@ form {
     background: rgb(114, 186, 234);
     color: white;
     border: none;
-    width: 78%;
+    width: 65%;
     padding: 10px 20px;
     border-radius: 3px;
     font-size: 17px;

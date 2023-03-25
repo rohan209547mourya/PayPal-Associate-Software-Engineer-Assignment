@@ -10,8 +10,7 @@
 
     width: 90%;
     margin: auto;
-    height: 60vh;
-    border: 1px solid red;
+    height: 63vh;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
@@ -59,6 +58,14 @@ p {
     font-size: 15px;
     margin-top: 0px;
 } */
+
+
+.category-select {
+    margin: 0;
+    padding: 7px;
+    background-color: #4c8dd6;
+    color: white;
+}
 
 .category {
 

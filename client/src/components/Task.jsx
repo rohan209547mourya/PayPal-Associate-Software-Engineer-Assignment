@@ -5,33 +5,27 @@ import { Link, useParams } from 'react-router-dom'
 import { uniqueId } from 'lodash'
 import '../styles/task.css'
 import ChangeAssignee from './ChangeAssignee'
+import TaskCard from './TaskCard'
 
 const Task = () => {
 
     const { sprintId } = useParams()
-    const [showPopup, setShowPopup] = useState(false);
-
-    const handleAssignTask = () => {
-        setShowPopup(true);
-    };
-
-    const handleClosePopup = () => {
-        setShowPopup(false);
-    };
-
     const [tasks, setTasks] = useState([])
 
-    useEffect(() => {
+    const fetchTasks = () => {
         fetchFromTaskPlannerApi(`sprints/${sprintId}/`, "GET", null, {
 
             'Content-Type': 'application/json',
             'x-auth-token': getjwtToken()
         })
             .then(res => {
-                console.log(res.sprint.tasks);
                 setTasks(res.sprint.tasks)
             })
-            .catch(err => console.log(err))
+            .catch(err => err)
+    }
+
+    useEffect(() => {
+        fetchTasks();
     }, [])
 
 
@@ -61,23 +55,17 @@ const Task = () => {
                         tasks.map(task =>
                             task.status === "todo" &&
                             (
-                                <div className='task' key={uniqueId()}>
-                                    <div className='task-title'>
-                                        <h3 style={{
-                                            color: `rgb(155, 67, 227)`,
-                                            fontSize: `15px`,
-                                            marginTop: `0px`
-                                        }}>
-                                            {task.title} : {task.type}</h3>
-                                        <p>Description: {task.description}</p>
-                                        <p>Assigned To: {task.assignee ? task.assignee.email : "Task is not Assigned Yet"}</p>
-                                    </div>
-                                    <div className='btns'>
-                                        <button className='assign-task' onClick={handleAssignTask}>Assign Task</button>
-                                        {showPopup && <ChangeAssignee handleClose={handleClosePopup} taskId={task._id} />}
-                                        <button className='change-status'>Change Status</button>
-                                    </div>
-                                </div>
+                                <TaskCard
+
+                                    key={task._id}
+                                    id={task._id}
+                                    title={task.title}
+                                    description={task.description}
+                                    type={task.type}
+                                    assignee={task.assignee}
+                                    status={task.status}
+                                    fetchTasks={fetchTasks}
+                                />
                             )
                         )
                     }
@@ -88,11 +76,17 @@ const Task = () => {
                         tasks.map(task =>
                             task.status === "inprogress" &&
                             (
-                                <div className='task' key={uniqueId()}>
-                                    <div className='task-title'>
-                                        <h3>{task.title}</h3>
-                                    </div>
-                                </div>
+                                <TaskCard
+
+                                    key={task._id}
+                                    id={task._id}
+                                    title={task.title}
+                                    description={task.description}
+                                    type={task.type}
+                                    assignee={task.assignee}
+                                    status={task.status}
+                                    fetchTasks={fetchTasks}
+                                />
                             )
                         )
 
@@ -104,11 +98,17 @@ const Task = () => {
                         tasks.map(task =>
                             task.status === "completed" &&
                             (
-                                <div className='task' key={uniqueId()}>
-                                    <div className='task-title'>
-                                        <h3>{task.title}</h3>
-                                    </div>
-                                </div>
+                                <TaskCard
+
+                                    key={task._id}
+                                    id={task._id}
+                                    title={task.title}
+                                    description={task.description}
+                                    type={task.type}
+                                    assignee={task.assignee}
+                                    status={task.status}
+                                    fetchTasks={fetchTasks}
+                                />
                             )
                         )
                     }

@@ -7,7 +7,6 @@ const Team = ({ id, title, description, createdAt }) => {
 
     const [showPopup, setShowPopup] = useState(false);
 
-    // console.log(id);
     const handleAddMember = () => {
         setShowPopup(true);
     };

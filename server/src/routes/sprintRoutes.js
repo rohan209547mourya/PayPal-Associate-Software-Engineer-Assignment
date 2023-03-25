@@ -49,16 +49,26 @@ router.get("/:sprintid", authorization, async(req, res) => {
         .select('tasks')
         .populate('tasks')
 
-
-    const user = await User.findById(tasks.assignee);
-
+    
     if (!tasks) return res.status(404).json({code: 404,message : "Sprint not found"})
+
+    for (let i = 0; i < tasks.tasks.length; i++) {
+        const task = tasks.tasks[i];
+        if (task.assignee) {
+          try {
+            const assignee = await User.findById(task.assignee).select('name email');
+            task.assignee = assignee;
+          } catch (error) {
+            
+          }
+        }
+      }
 
     res.status(200).send({
         code: 200,
         message: "Sprint found",
         sprint: tasks,
-        assignee: user
+        // assignee: user
     })
 })
 

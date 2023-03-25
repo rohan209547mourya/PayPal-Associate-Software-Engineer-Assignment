@@ -11,7 +11,10 @@ router.post('/register' , async (req, res) => {
     const isValidData = validate(req.body)
 
     if (isValidData.error) {
-        return res.status(400).send(isValidData.error.details[0].message)
+        return res.status(400).send({
+            code: 400,
+            message: isValidData.error.details[0].message
+        })
     }
 
     let user = await User.findOne({email: req.body.email})

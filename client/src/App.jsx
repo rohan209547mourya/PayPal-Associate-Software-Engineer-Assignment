@@ -7,13 +7,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Signup from './components/Signup'
 import Home from './components/Home'
-import { fetchCurrentUserData } from './utils/api'
 import Sprint from './components/Sprint'
 import { getjwtToken } from './utils/setJwtToken'
 import { useNavigate } from 'react-router-dom'
 import Logout from './components/Logout'
 import Task from './components/Task'
-
 
 function App() {
 
@@ -26,7 +24,8 @@ function App() {
     if (getjwtToken()) {
       setLogin(true)
     }
-  }, [])
+  })
+
 
 
 
@@ -38,6 +37,8 @@ function App() {
 
         <Navbar isUserLoggedIn={isLoggedIn} />
         <Routes>
+
+
           <Route path="/" element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/home' element={<Home />} />

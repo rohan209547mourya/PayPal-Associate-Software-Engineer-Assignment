@@ -13,7 +13,6 @@ function ChangeAssignee({ handleClose, taskId }) {
     const [email, setEmail] = useState("");
 
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -29,7 +28,6 @@ function ChangeAssignee({ handleClose, taskId }) {
             "x-auth-token": getjwtToken()
         })
             .then((res) => {
-                console.log(res);
                 if (res) {
 
                     toast.success("Task has been assigned to user", {
@@ -46,8 +44,6 @@ function ChangeAssignee({ handleClose, taskId }) {
             }
             )
             .catch((err) => {
-
-                console.log(err);
                 if (err.code == 400) {
                     toast.warning(err.message, {
                         position: "top-right",

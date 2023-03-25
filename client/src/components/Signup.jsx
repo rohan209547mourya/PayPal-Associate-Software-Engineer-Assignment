@@ -20,7 +20,6 @@ const Signup = () => {
     const handleSubmitRequest = (e) => {
         e.preventDefault();
 
-        console.log(signupObject);
 
         fetchFromTaskPlannerApi('users/register', 'POST', signupObject)
             .then((res) => {

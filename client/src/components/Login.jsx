@@ -20,9 +20,6 @@ const Login = () => {
 
     const handleSubmitRequest = (e) => {
         e.preventDefault();
-
-        console.log(loginObject);
-
         fetchFromTaskPlannerApi('auth/login', 'POST', loginObject)
             .then((res) => {
 

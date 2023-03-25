@@ -2,7 +2,8 @@ const { Team, validateTeam } = require('../models/teamModel')
 const authorization = require('../../middleware/authorization')
 const { User } = require('../models/userModel')
 const express = require('express');
-const _ = require('lodash')
+const _ = require('lodash');
+const auth = require('../../middleware/authorization');
 const router = express.Router();
 
 
@@ -10,6 +11,8 @@ const router = express.Router();
 router.post("/", authorization, async(req, res) => {
 
     const isValidData = validateTeam(req.body)
+
+    console.log(req.body);
 
     if (isValidData.error) {
         return res.status(400).json({

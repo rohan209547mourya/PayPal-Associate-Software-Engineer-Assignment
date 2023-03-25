@@ -5,8 +5,8 @@ export const fetchFromTaskPlannerApi = async (path, method = 'GET', data = null,
     'Content-Type': 'application/json'
   }) => {
 
-    const URL = 'http://localhost:5000/api/';
-  
+    const URL = 'https://task-planner-backend-new.onrender.com/api/';
+    // https://task-planner-backend-new.onrender.com
     const options = {
       method,
       headers: headers

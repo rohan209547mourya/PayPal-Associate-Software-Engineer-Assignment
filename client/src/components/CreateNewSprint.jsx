@@ -124,7 +124,7 @@ function CreateNewSprint({ handleClose, teamId, fetchSprints }) {
         setTimeout(() => {
 
             fetchSprints()
-        }, 3000)
+        }, 500)
 
         // window.location.reload();
     };

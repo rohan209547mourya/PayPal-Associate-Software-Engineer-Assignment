@@ -12,8 +12,6 @@ const TaskCard = ({ id, type, title, description, assignee, status, fetchTasks }
         setShowPopup(true);
     };
 
-    console.log(id, type, title, description, assignee);
-
     const handleClosePopup = () => {
         setShowPopup(false);
     };
@@ -28,8 +26,6 @@ const TaskCard = ({ id, type, title, description, assignee, status, fetchTasks }
             'x-auth-token': getjwtToken()
         })
             .then(res => {
-
-                console.log(res);
 
                 if (res.code == 201)
                     toast.success(res.message, {
@@ -50,7 +46,7 @@ const TaskCard = ({ id, type, title, description, assignee, status, fetchTasks }
         setTimeout(() => {
 
             fetchTasks()
-        }, 3000)
+        }, 500)
     }
 
 

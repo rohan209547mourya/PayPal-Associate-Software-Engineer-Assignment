@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
+require('dotenv').config()
 
 module.exports = async function() {
     try {
-        await mongoose.connect("mongodb://0.0.0.0:27017/task-planner-db")
+        await mongoose.connect(`mongodb+srv://rohanmourya671:${process.env.DB_PASSWORD}@taskplannerclustor.3mryuzl.mongodb.net/?retryWrites=true&w=majority`)
+
         console.log("Connected to MongoDB");
     } 
     catch (error) {

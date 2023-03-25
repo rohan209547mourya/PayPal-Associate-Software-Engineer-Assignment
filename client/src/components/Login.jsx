@@ -18,11 +18,15 @@ const Login = () => {
         password: ''
     })
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
     const handleSubmitRequest = (e) => {
         e.preventDefault();
+        setIsLoggedIn(true)
         fetchFromTaskPlannerApi('auth/login', 'POST', loginObject)
             .then((res) => {
 
+                setIsLoggedIn(false)
                 if (res.code !== 200) {
                     toast.error(res.message, {
                         position: "top-right",
@@ -55,6 +59,7 @@ const Login = () => {
 
             })
             .catch((err) => {
+                setIsLoggedIn(false)
                 toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -111,7 +116,7 @@ const Login = () => {
                         <span className="placeholder">Enter Password</span>
                     </label>
                 </div>
-                <button className='loginBtn' type="submit">LOGIN</button>
+                <button className='loginBtn' type="submit">{isLoggedIn ? "Loading..." : "LOGIN"}</button>
                 <div className="newAccount">
                     <p>Don't have an account? <Link to={"/signup"} className='create-one'>Create One</Link></p>
                 </div>

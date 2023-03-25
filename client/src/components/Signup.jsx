@@ -17,13 +17,18 @@ const Signup = () => {
         name: ''
     })
 
+
+    const [isSignedUp, setIsSignedUp] = useState(false)
+
     const handleSubmitRequest = (e) => {
         e.preventDefault();
-
+        setIsSignedUp(true)
 
         fetchFromTaskPlannerApi('users/register', 'POST', signupObject)
             .then((res) => {
 
+
+                setIsSignedUp(false)
                 if (res.code !== 201) {
                     toast.error(res.message, {
                         position: "top-right",
@@ -53,6 +58,8 @@ const Signup = () => {
             })
             .catch((err) => {
 
+
+                setIsSignedUp(false)
                 toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,
@@ -127,7 +134,7 @@ const Signup = () => {
                         <span className="placeholder">Enter Password</span>
                     </label>
                 </div>
-                <button className='signupBtn' type="submit">SIGNUP</button>
+                <button className='signupBtn' type="submit">{isSignedUp ? "Loading..." : "SIGN UP"}</button>
                 <div className="alreadyAccount">
                     <p>Already have an account? <Link to={"/"} className='login'>Login</Link></p>
                 </div>
